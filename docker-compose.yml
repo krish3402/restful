@@ -6,7 +6,7 @@ services:
   app-server:
     # Configuration for building the docker image for the backend service
     build:
-      context: rest # Use an image built from the specified dockerfile in the `polling-app-server` directory.
+      context: meeting-server # Use an image built from the specified dockerfile in the `polling-app-server` directory.
       dockerfile: Dockerfile
     ports:
       - "8082:8082" # Forward the exposed port 8080 on the container to port 8080 on the host machine
@@ -24,7 +24,7 @@ services:
   # Frontend Service
   app-client:
     build:
-      context: . # Use an image built from the specified dockerfile in the `polling-app-client` directory.
+      context: meeting-client # Use an image built from the specified dockerfile in the `polling-app-client` directory.
       dockerfile: Dockerfile
       args:
         REACT_APP_API_BASE_URL: http://127.0.0.1:80/api
@@ -48,15 +48,10 @@ services:
       MYSQL_DATABASE: db_meeting
       MYSQL_USER: root
       MYSQL_PASSWORD: password
-      MYSQL_ROOT_PASSWORD: password
-      #    command: "mysql -u root -ppassword db_meeting < /tmp/db_meeting.sql"
+      MYSQL_ROOT_PASSWORD: password   
     volumes:
          - /var/lib/mysql:/var/lib/mysql
-        #    command: copy /home/ubuntu/restfull/mysql/db_meeting.sql /tmp/
-        # command: cp /home/ubuntu/restfull/mysql/db_meeting.sql /var/lib/mysql/db_meeting/
-        #    command: mysql -u root -ppassword db_meeting < /tmp/db_meeting.sql
-        #    command:
-        #      - mysql -u root -ppassword db_meeting < /tmp/db_meeting.sql
+     
     networks:
       - backend
 
